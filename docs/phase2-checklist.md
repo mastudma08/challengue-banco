@@ -1,0 +1,24 @@
+# Checklist de aceptación — fase 2
+
+- [x] FastAPI es la única entrada pública.
+- [x] JWT obligatorio y autorización por scopes.
+- [x] Validación backend independiente del frontend.
+- [x] Campos extra rechazados.
+- [x] Request size limitado.
+- [x] Respuesta pública no expone documento, corpus RAG ni audit trail.
+- [x] Orchestrator separado del workflow.
+- [x] Workflow implementado como FSM determinista.
+- [x] Transiciones inválidas bloqueadas.
+- [x] IdentityAgent con tool exclusiva.
+- [x] RiskAgent con tool exclusiva.
+- [x] DocumentationAgent con tool exclusiva.
+- [x] Tool Gateway con least privilege.
+- [x] Argumentos de tools validados por schema.
+- [x] RAG local de políticas.
+- [x] Documentos contrastados con evidencia recuperada.
+- [x] PII Guard antes/después del LLM.
+- [x] LLM limitado a redacción.
+- [x] Fallback determinista si falla el LLM.
+- [x] Estado persistente en SQLite.
+- [x] Despliegue Podman reproducible.
+- [x] 16 tests automáticos.

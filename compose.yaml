@@ -1,0 +1,38 @@
+services:
+  onboarding-api:
+    build:
+      context: .
+      dockerfile: Containerfile
+    image: onboarding-agent:phase2
+    container_name: onboarding-agent-phase2
+    environment:
+      ENVIRONMENT: podman
+      DATABASE_URL: sqlite:////data/onboarding.db
+      AUTH_ENABLED: "true"
+      JWT_SECRET: ${JWT_SECRET:-local-dev-secret-change-me-32-bytes-minimum}
+      JWT_ALGORITHM: HS256
+      JWT_ISSUER: onboarding-local
+      JWT_AUDIENCE: onboarding-api
+      IDENTITY_CONFIDENCE_THRESHOLD: "0.8"
+      POLICY_CORPUS_PATH: /app/docs/policies
+      MAX_REQUEST_BYTES: "16384"
+      LLM_MODE: ${LLM_MODE:-mock}
+      LLM_BASE_URL: ${LLM_BASE_URL:-http://host.containers.internal:11434}
+      LLM_API_KEY: ${LLM_API_KEY:-local-placeholder}
+      LLM_MODEL: ${LLM_MODEL:-local-model}
+    ports:
+      - "8080:8080"
+    volumes:
+      - onboarding-data:/data:U
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health', timeout=2)"
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+volumes:
+  onboarding-data: {}
